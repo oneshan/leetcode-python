@@ -1,0 +1,16 @@
+# 1984 - Maximum Distance Between a Pair of Values
+# Date: 2022-10-11
+# Runtime: 2655 ms, Memory: 32.7 MB
+# Submission Id: 820204369
+
+
+class Solution:
+    def maxDistance(self, nums1: List[int], nums2: List[int]) -> int:
+        
+        i = ans = 0
+        for j in range(len(nums2)):
+            while i <= j and i < len(nums1) and nums1[i] > nums2[j]:
+                i += 1
+            if i <= j and i < len(nums1):
+                ans = max(ans, j-i)
+        return ans
