@@ -1,0 +1,36 @@
+# 0726 - Number of Atoms
+# Date: 2024-07-14
+# Runtime: 39 ms, Memory: 16.5 MB
+# Submission Id: 1320170372
+
+
+class Solution:
+    def countOfAtoms(self, formula: str) -> str:
+
+        stack = [1]
+        counter = Counter()
+        atom, cnt = '', ''
+
+        for ch in formula[::-1]:
+            if ch.isdigit():
+                cnt = ch + cnt
+            elif ch == ')':
+                stack.append(int(cnt) * stack[-1] if cnt else 1)
+                cnt = ''
+            elif ch == '(':
+                stack.pop()
+                cnt = ''
+            elif ch.islower():
+                atom = ch
+            else:
+                atom = ch + atom
+                counter[atom] += stack[-1] * (int(cnt) if cnt else 1)
+                atom, cnt = '', ''
+        
+        res = []
+        for atom in sorted(counter):
+            res.append(atom)
+            if counter[atom] > 1:
+                res.append(str(counter[atom]))
+
+        return ''.join(res)
